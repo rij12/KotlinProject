@@ -14,7 +14,6 @@ data class ConversionResponse(val startUnit: String, val endUnit: String, val ra
 @RestController
 @RequestMapping("/convert")
 class ConversionController(private val conversionService: ConversionService) {
-
     @PostMapping
     fun handleConversion(@RequestBody message: ConversionRequest) : ResponseEntity<ConversionResponse> {
         try {
