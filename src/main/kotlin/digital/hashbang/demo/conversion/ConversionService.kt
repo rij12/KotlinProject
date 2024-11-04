@@ -7,13 +7,13 @@ import java.io.File
 @Service
 class ConversionService(Config :Configuration) {
 
-//    private final val fileStream = File(Config.measurementsInputFile).inputStream()
-//    val nodeGraph = Graph(fileStream)
+    private final val fileStream = File(Config.measurementsInputFile).inputStream()
+    val nodeGraph = Graph(fileStream)
 
-//    fun search(originUnit :String, destinationUnit :String) {
-//        val ratio = nodeGraph.bfSearch(originUnit, destinationUnit)
-//    }
-
-
+    fun search(originUnit :String, destinationUnit :String) : Float {
+        val ratio = nodeGraph.bfSearch(originUnit.toLowerCase(), destinationUnit.toLowerCase())
+        require(ratio != 0.0F) { "Unit does not exist" }
+        return ratio
+    }
 
 }
