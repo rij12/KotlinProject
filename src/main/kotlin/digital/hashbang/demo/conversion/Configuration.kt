@@ -6,5 +6,5 @@ import org.springframework.context.annotation.Configuration
 @Configuration
 class Configuration {
     @Value("\${converter.filepath}")
-    lateinit var measurementsInputFile : String
+    lateinit var measurementsInputFile: String
 }

@@ -9,12 +9,12 @@ class Graph(inputFileStream: InputStream) {
     private val inputCSVNode = readMeasurementsCSV(inputFileStream)
 
     init {
-        inputCSVNode.forEach{
+        inputCSVNode.forEach {
             addConversion(it.first, it.second, it.third)
         }
     }
 
-    fun addUnitRatio(startUnit: String, endUnit :String, ratio: Float) {
+    fun addUnitRatio(startUnit: String, endUnit: String, ratio: Float) {
         this.graph[startUnit]?.set(endUnit, ratio)
     }
 
@@ -22,7 +22,7 @@ class Graph(inputFileStream: InputStream) {
         return this.graph.map { it.key }
     }
 
-    fun bfSearch (startNode: String, endNode: String) : Float {
+    fun bfSearch(startNode: String, endNode: String): Float {
         val nodesToVisit = ArrayDeque<Pair<String, Float>>()
         nodesToVisit.add(Pair(startNode.toLowerCase(), 1.0F))
         val visitedNodes = mutableSetOf<String>()
@@ -32,7 +32,7 @@ class Graph(inputFileStream: InputStream) {
                 return rateFromOrigin
             }
             visitedNodes.add(node)
-            getNeighbors(node).forEach{
+            getNeighbors(node).forEach {
                 if (!visitedNodes.contains(it.first)) {
                     nodesToVisit.add(Pair(it.first, it.second * rateFromOrigin))
                 }
@@ -41,7 +41,7 @@ class Graph(inputFileStream: InputStream) {
         return 1.0F
     }
 
-    private fun addConversion(origin: String, dest: String, rate : Float) {
+    private fun addConversion(origin: String, dest: String, rate: Float) {
         if (!this.graph.containsKey(origin)) {
             this.graph[origin] = hashMapOf()
         }
@@ -50,7 +50,7 @@ class Graph(inputFileStream: InputStream) {
         // Reverse the graph connection
         // Meters -> 0.3... -> Feet
         // Feet -> 1/0.3... -> Meters
-        if (!this.graph.containsKey(dest)){
+        if (!this.graph.containsKey(dest)) {
             this.graph[dest] = hashMapOf()
         }
         this.graph[dest]?.set(origin, 1.0F / rate)
