@@ -7,7 +7,6 @@ import kotlin.collections.HashMap
 class Graph(inputFileStream: InputStream) {
     private val graph = HashMap<String, HashMap<String, Float>>()
     private val inputCSVNode = readMeasurementsCSV(inputFileStream)
-    private val nodesToVisit = ArrayDeque<Pair<String, Float>>()
 
     init {
         inputCSVNode.forEach{
@@ -24,6 +23,7 @@ class Graph(inputFileStream: InputStream) {
     }
 
     fun bfSearch (startNode: String, endNode: String) : Float {
+        val nodesToVisit = ArrayDeque<Pair<String, Float>>()
         nodesToVisit.add(Pair(startNode.toLowerCase(), 1.0F))
         val visitedNodes = mutableSetOf<String>()
         while (!nodesToVisit.isEmpty()) {
@@ -48,7 +48,7 @@ class Graph(inputFileStream: InputStream) {
         this.graph[origin]?.set(dest, rate)
 
         // Reverse the graph connection
-        // Meters -> 0.3.. -> Feet
+        // Meters -> 0.3... -> Feet
         // Feet -> 1/0.3... -> Meters
         if (!this.graph.containsKey(dest)){
             this.graph[dest] = hashMapOf()
